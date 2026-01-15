@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Skill–Role Graph Explorer</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+<div class="container py-5">
+
+    <h1 class="text-center mb-5">Skill–Role Graph Explorer</h1>
+
+    <!-- ROLE → SKILLS -->
+    <div class="card shadow p-4 mb-5">
+        <h3>Role → Skill Prediction</h3>
+        <form method="POST">
+            <div class="mb-3">
+                <label class="form-label">Select a Role</label>
+                <select name="role_select" class="form-select">
+                    {% for r in roles %}
+                    <option value="{{ r }}" {% if r==selected_role %}selected{% endif %}>
+                        {{ r }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button class="btn btn-primary">Predict Skills</button>
+        </form>
+
+        {% if predicted_skills %}
+        <h4 class="mt-4">Top Skills for <b>{{ selected_role }}</b></h4>
+        <ul class="list-group">
+            {% for s in predicted_skills %}
+            <li class="list-group-item">{{ s }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+
+    <!-- SKILLS → ROLE -->
+    <div class="card shadow p-4 mb-5">
+        <h3>Skills → Role Prediction</h3>
+        <form method="POST">
+            <label class="form-label">Enter Skills (comma separated)</label>
+            <input type="text"
+                   name="skills_input"
+                   class="form-control"
+                   placeholder="Python, SQL, Machine Learning">
+            <button class="btn btn-success mt-3">Predict Role</button>
+        </form>
+
+        {% if predicted_roles %}
+        <h4 class="mt-4">Top Matching Roles</h4>
+        <ul class="list-group">
+            {% for r, score in predicted_roles %}
+            <li class="list-group-item">
+                {{ r }} — {{ "%.4f"|format(score) }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+
+    <hr class="my-5">
+
+    <hr class="my-5">
+
+<div class="text-center">
+    <h3 class="mb-4">Explore All Graphs & Intelligence Tools</h3>
+
+    <!-- Original Skill–Role Graph -->
+    <a href="/graph" class="btn btn-outline-dark btn-lg m-3">
+        🧩 Skill–Role Graph
+    </a>
+
+    <!-- New Career Transition Graph -->
+    <a href="/career-graph" class="btn btn-dark btn-lg m-3">
+        🔗 Career Transition Graph
+    </a>
+
+    <!-- New Career Path Recommendation -->
+    <a href="/career-path" class="btn btn-primary btn-lg m-3">
+        🧭 Career Path Recommendation
+    </a>
+</div>
+
+
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Skill Graph Visualization</title>
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <style>
+        body { 
+            font-family: Arial; 
+            margin: 0;
+            overflow: hidden;
+        }
+        #graph {
+            width: 100vw;
+            height: 100vh;
+            background: #fafafa;
+        }
+        .node { stroke: #fff; stroke-width: 1.2px; cursor: pointer; }
+        .role { fill: #007bff; }
+        .skill { fill: #28a745; }
+        .link { stroke: #bbb; opacity: 0.6; }
+        text {
+            pointer-events: none;
+            font-size: 10px;
+        }
+
+        /* Back button styling */
+        #back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: #007bff;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0px 3px 6px rgba(0,0,0,0.2);
+        }
+        #back-btn:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- BACK BUTTON -->
+<a href="/" id="back-btn">← Back to Home</a>
+
+<div id="graph"></div>
+
+<script>
+// Fetch graph JSON from Flask
+fetch("/graph-data")
+    .then(resp => resp.json())
+    .then(data => drawGraph(data));
+
+function drawGraph(graph) {
+
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    const svg = d3.select("#graph")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+    // Enable zoom + pan
+    const zoom = d3.zoom()
+        .scaleExtent([0.1, 3])
+        .on("zoom", (event) => {
+            container.attr("transform", event.transform);
+        });
+
+    svg.call(zoom);
+
+    const container = svg.append("g");
+
+    const color = d3.scaleOrdinal()
+                    .domain(["role", "skill"])
+                    .range(["#007bff", "#28a745"]);
+
+    const simulation = d3.forceSimulation(graph.nodes)
+        .force("link", d3.forceLink(graph.edges).id(d => d.id).distance(80))
+        .force("charge", d3.forceManyBody().strength(-250))
+        .force("center", d3.forceCenter(width / 2, height / 2))
+        .force("collision", d3.forceCollide().radius(20));
+
+    const link = container.append("g")
+        .selectAll("line")
+        .data(graph.edges)
+        .enter().append("line")
+        .attr("class", "link");
+
+    const node = container.append("g")
+        .selectAll("circle")
+        .data(graph.nodes)
+        .enter().append("circle")
+        .attr("r", 6)
+        .attr("class", d => "node " + d.type)
+        .attr("fill", d => color(d.type))
+        .call(drag(simulation));
+
+    const label = container.append("g")
+        .selectAll("text")
+        .data(graph.nodes)
+        .enter().append("text")
+        .text(d => d.id);
+
+    simulation.on("tick", () => {
+        node.attr("cx", d => d.x)
+            .attr("cy", d => d.y);
+
+        label.attr("x", d => d.x + 8)
+             .attr("y", d => d.y + 4);
+
+        link.attr("x1", d => d.source.x)
+            .attr("y1", d => d.source.y)
+            .attr("x2", d => d.target.x)
+            .attr("y2", d => d.target.y);
+    });
+
+    function drag(sim) {
+        function dragstarted(event, d) {
+            if (!event.active) sim.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+        }
+        function dragged(event, d) {
+            d.fx = event.x;
+            d.fy = event.y;
+        }
+        function dragended(event, d) {
+            if (!event.active) sim.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+        }
+        return d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended);
+    }
+}
+</script>
+
+</body>
+</html>

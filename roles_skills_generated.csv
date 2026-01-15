@@ -1,0 +1,151 @@
+role,skill
+Software Engineer,Python
+Software Engineer,Git
+Software Engineer,Algorithms
+Software Engineer,Data Structures
+Software Engineer,Unit Testing
+Software Engineer,Docker
+Backend Developer,Node.js
+Backend Developer,Express.js
+Backend Developer,Databases
+Backend Developer,SQL
+Backend Developer,API Design
+Backend Developer,Docker
+Frontend Developer,JavaScript
+Frontend Developer,React
+Frontend Developer,HTML
+Frontend Developer,CSS
+Frontend Developer,Webpack
+Frontend Developer,Testing
+Full-Stack Developer,JavaScript
+Full-Stack Developer,Node.js
+Full-Stack Developer,React
+Full-Stack Developer,SQL
+Full-Stack Developer,Docker
+Full-Stack Developer,CI/CD
+Mobile App Developer,Kotlin
+Mobile App Developer,Swift
+Mobile App Developer,React Native
+Mobile App Developer,UI/UX
+Mobile App Developer,APIs
+Mobile App Developer,Testing
+DevOps Engineer,AWS
+DevOps Engineer,Kubernetes
+DevOps Engineer,Docker
+DevOps Engineer,Terraform
+DevOps Engineer,CI/CD
+DevOps Engineer,Monitoring
+Cloud Engineer,AWS
+Cloud Engineer,GCP
+Cloud Engineer,Azure
+Cloud Engineer,Terraform
+Cloud Engineer,Networking
+Cloud Engineer,Docker
+AI/ML Engineer,Python
+AI/ML Engineer,TensorFlow
+AI/ML Engineer,PyTorch
+AI/ML Engineer,Machine Learning
+AI/ML Engineer,Data Processing
+AI/ML Engineer,Model Deployment
+Data Scientist,Python
+Data Scientist,Pandas
+Data Scientist,Machine Learning
+Data Scientist,Statistics
+Data Scientist,Visualization
+Data Scientist,SQL
+Data Analyst,SQL
+Data Analyst,Excel
+Data Analyst,Tableau
+Data Analyst,Pandas
+Data Analyst,Reporting
+Data Analyst,Statistics
+Data Engineer,Spark
+Data Engineer,ETL
+Data Engineer,Airflow
+Data Engineer,SQL
+Data Engineer,Data Warehousing
+Data Engineer,Python
+MLOps Engineer,Kubernetes
+MLOps Engineer,Docker
+MLOps Engineer,CI/CD
+MLOps Engineer,Model Serving
+MLOps Engineer,Monitoring
+MLOps Engineer,Python
+Cybersecurity Analyst,Network Security
+Cybersecurity Analyst,SIEM
+Cybersecurity Analyst,Penetration Testing
+Cybersecurity Analyst,Linux
+Cybersecurity Analyst,Forensics
+Cybersecurity Analyst,IDS/IPS
+QA Engineer,Test Automation
+QA Engineer,Selenium
+QA Engineer,Unit Testing
+QA Engineer,CI/CD
+QA Engineer,Bug Tracking
+QA Engineer,API Testing
+Product Manager,Roadmapping
+Product Manager,Stakeholder Management
+Product Manager,Data Analysis
+Product Manager,Communication
+Product Manager,Prioritization
+Product Manager,A/B Testing
+Business Analyst,Requirements Gathering
+Business Analyst,SQL
+Business Analyst,Data Visualization
+Business Analyst,Stakeholder Communication
+Business Analyst,UML
+Business Analyst,Reporting
+Systems Engineer,Linux
+Systems Engineer,Networking
+Systems Engineer,Scripting
+Systems Engineer,Monitoring
+Systems Engineer,Hardware Troubleshooting
+Systems Engineer,Security
+Embedded Systems Engineer,C
+Embedded Systems Engineer,C++
+Embedded Systems Engineer,Microcontrollers
+Embedded Systems Engineer,RTOS
+Embedded Systems Engineer,Hardware Debugging
+Embedded Systems Engineer,Embedded Linux
+Network Engineer,Routing
+Network Engineer,Switching
+Network Engineer,Firewall
+Network Engineer,BGP
+Network Engineer,VPN
+Network Engineer,Network Troubleshooting
+Database Administrator,PostgreSQL
+Database Administrator,MySQL
+Database Administrator,Performance Tuning
+Database Administrator,Backup/Restore
+Database Administrator,SQL
+Database Administrator,Replication
+Site Reliability Engineer (SRE),Monitoring
+Site Reliability Engineer (SRE),Alerting
+Site Reliability Engineer (SRE),Incident Response
+Site Reliability Engineer (SRE),Kubernetes
+Site Reliability Engineer (SRE),Automation
+Site Reliability Engineer (SRE),Reliability
+UI/UX Designer,Figma
+UI/UX Designer,Prototyping
+UI/UX Designer,User Research
+UI/UX Designer,Interaction Design
+UI/UX Designer,Wireframing
+UI/UX Designer,Accessibility
+Blockchain Developer,Solidity
+Blockchain Developer,Ethereum
+Blockchain Developer,Smart Contracts
+Blockchain Developer,Cryptography
+Blockchain Developer,Web3.js
+Blockchain Developer,Security
+AR/VR Developer,Unity
+AR/VR Developer,3D Math
+AR/VR Developer,C#
+AR/VR Developer,Shaders
+AR/VR Developer,XR UI
+AR/VR Developer,Optimization
+Robotics Engineer,ROS
+Robotics Engineer,C++
+Robotics Engineer,Sensors
+Robotics Engineer,Control Systems
+Robotics Engineer,Computer Vision
+Robotics Engineer,Path Planning

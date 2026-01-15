@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Career Transition Graph</title>
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <style>
+        body { margin:0; overflow:hidden; font-family:Arial; }
+        #graph { width:100vw; height:100vh; background:#fafafa; }
+
+        .node { cursor:pointer; stroke:#fff; stroke-width:1.2px; }
+        .role { fill:#007bff; }
+        .link { stroke:#999; opacity:0.6; }
+        text { pointer-events:none; font-size:11px; }
+
+        #back-btn {
+            position: fixed;
+            top: 18px;
+            left: 18px;
+            background:#007bff;
+            color:white;
+            padding:10px 16px;
+            font-size:15px;
+            font-weight:bold;
+            border-radius:6px;
+            text-decoration:none;
+            z-index:10000;
+        }
+        #back-btn:hover { background:#0056b3; }
+
+        #sidebar {
+            position: fixed;
+            top: 18px;
+            right: 18px;
+            width: 300px;
+            max-height: 80vh;
+            overflow:auto;
+            background:white;
+            padding:15px;
+            border-radius:8px;
+            box-shadow:0 4px 15px rgba(0,0,0,0.2);
+            z-index:10000;
+        }
+    </style>
+</head>
+
+<body>
+
+<a href="/" id="back-btn">← Back</a>
+
+<div id="sidebar">
+    <h3>Role Info</h3>
+    <div id="node-info">Click any role node to see transitions</div>
+</div>
+
+<div id="graph"></div>
+
+<script>
+fetch("/career-graph-data")
+  .then(r => r.json())
+  .then(data => drawGraph(data));
+
+function drawGraph(graph) {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    const svg = d3.select("#graph").append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+    const zoom = d3.zoom().scaleExtent([0.1, 3]).on("zoom", e => {
+        container.attr("transform", e.transform);
+    });
+    svg.call(zoom);
+
+    const container = svg.append("g");
+
+    // Directed edges (with arrows)
+    svg.append("defs").append("marker")
+        .attr("id", "arrow")
+        .attr("viewBox", "0 -5 10 10")
+        .attr("refX", 20)
+        .attr("refY", 0)
+        .attr("markerWidth", 6)
+        .attr("markerHeight", 6)
+        .attr("orient", "auto")
+      .append("path")
+        .attr("d", "M0,-5L10,0L0,5")
+        .attr("fill", "#999");
+
+    const link = container.append("g")
+        .selectAll("path")
+        .data(graph.edges)
+        .enter()
+        .append("path")
+        .attr("class", "link")
+        .attr("marker-end", "url(#arrow)");
+
+    const node = container.append("g")
+        .selectAll("circle")
+        .data(graph.nodes)
+        .enter()
+        .append("circle")
+        .attr("r", 8)
+        .attr("class", "node role")
+        .on("click", onNodeClick)
+        .call(d3.drag()
+            .on("start", dragStart)
+            .on("drag", dragged)
+            .on("end", dragEnd)
+        );
+
+    const label = container.append("g")
+        .selectAll("text")
+        .data(graph.nodes)
+        .enter()
+        .append("text")
+        .text(d => d.id);
+
+    const simulation = d3.forceSimulation(graph.nodes)
+        .force("link", d3.forceLink(graph.edges).id(d => d.id).distance(120))
+        .force("charge", d3.forceManyBody().strength(-300))
+        .force("center", d3.forceCenter(width / 2, height / 2))
+        .force("collision", d3.forceCollide().radius(25));
+
+    simulation.on("tick", () => {
+        link.attr("d", d => `M ${d.source.x},${d.source.y} L ${d.target.x},${d.target.y}`);
+        node.attr("cx", d => d.x).attr("cy", d => d.y);
+        label.attr("x", d => d.x + 10).attr("y", d => d.y + 4);
+    });
+
+    function onNodeClick(e, d) {
+        const outgoing = graph.edges.filter(x => x.source === d.id);
+        let html = `<h4>${d.id}</h4>`;
+        if (outgoing.length === 0) {
+            html += "<p>No suggested transitions</p>";
+        } else {
+            html += "<ul>";
+            outgoing.forEach(o => {
+                html += `<li>${o.target} — ${o.weight.toFixed(3)}</li>`;
+            });
+            html += "</ul>";
+        }
+        document.getElementById("node-info").innerHTML = html;
+    }
+
+    function dragStart(e, d) {
+        if (!e.active) simulation.alphaTarget(0.3).restart();
+        d.fx = d.x; d.fy = d.y;
+    }
+    function dragged(e, d) {
+        d.fx = e.x; d.fy = e.y;
+    }
+    function dragEnd(e, d) {
+        if (!e.active) simulation.alphaTarget(0);
+        d.fx = null; d.fy = null;
+    }
+}
+</script>
+
+</body>
+</html>
