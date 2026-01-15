@@ -54,3 +54,25 @@ The system:
 ## 📂 Project Structure
 
 -Role-Graph-Explore
+Skill-Role-Graph-Explore/
+│── app.py
+│── graph_builder.py
+│── embeddings.py
+│── recommender.py
+│── static/
+│── templates/
+│── data/
+│── README.md
+
+
+---
+
+## How to Run the Project
+
+```bash
+
+1) Run the Application
+python app.py
+
+2) Open in Browser
+http://localhost:5000
